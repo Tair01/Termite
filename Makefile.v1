@@ -1,0 +1,23 @@
+CXX = g++
+CXXFLAGS = -Wall -std=c++11 -g -O3
+EXEC_FILE = test
+
+all: $(EXEC_FILE)
+
+$(EXEC_FILE): coord.o grille.o termite.o test.o
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+coord.o: coord.cpp coord.hpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+grille.o: grille.cpp grille.hpp termite.hpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+    
+termite.o: termite.cpp termite.hpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+test.o: test.cpp coord.hpp grille.hpp termite.hpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+clean:
+	rm -f *.o $(EXEC_FILE)
